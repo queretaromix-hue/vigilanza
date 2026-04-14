@@ -95,32 +95,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 6. Form Submission Simulation
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button');
-            const originalText = btn.innerText;
-            
-            btn.innerText = 'Enviando solicitud...';
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerText = '¡Solicitud Enviada!';
-                btn.style.background = '#25d366';
-                btn.style.borderColor = '#25d366';
-                contactForm.reset();
+    // 6. Number Counter Animation
+    const counterElements = document.querySelectorAll('.stat-number');
+    const counterObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const targetText = element.innerText;
+                // Extract only numbers
+                const targetNumber = parseInt(targetText.replace(/\D/g, ''));
+                // Extract any non-numeric suffix (like '+')
+                const suffix = targetText.replace(/[0-9]/g, '');
                 
-                setTimeout(() => {
-                    btn.innerText = originalText;
-                    btn.disabled = false;
-                    btn.style.background = '';
-                    btn.style.borderColor = '';
-                }, 3000);
-            }, 1500);
+                let startTimestamp = null;
+                const duration = 2000; // 2 seconds
+
+                const step = (timestamp) => {
+                    if (!startTimestamp) startTimestamp = timestamp;
+                    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                    
+                    // Use easeOutQuart function for smoother deceleration
+                    const easeProgress = 1 - Math.pow(1 - progress, 4);
+                    const currentNumber = Math.floor(easeProgress * targetNumber);
+                    
+                    element.innerText = currentNumber + suffix;
+                    
+                    if (progress < 1) {
+                        window.requestAnimationFrame(step);
+                    } else {
+                        element.innerText = targetText; // Ensure exact final value
+                    }
+                };
+                
+                window.requestAnimationFrame(step);
+                observer.unobserve(element); // Only run once
+            }
         });
-    }
+    }, { threshold: 0.5 });
+
+    counterElements.forEach(el => {
+        counterObserver.observe(el);
+    });
 
     console.log('Vigilanza Platform Initialized');
 });

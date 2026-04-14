@@ -130,10 +130,11 @@ header.scrolled {
   font-weight: 800;
   font-size: 1.5rem;
   letter-spacing: 1px;
+  color: var(--white);
 }
 
 .logo span {
-  color: var(--gold);
+  color: var(--white);
 }
 
 .nav-links {
@@ -234,8 +235,25 @@ header.scrolled {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  opacity: 0.6;
-  filter: grayscale(1);
+  flex-wrap: wrap;
+  gap: 2rem;
+  opacity: 0.8;
+}
+
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+}
+
+.trust-item i {
+  width: 20px;
+  height: 20px;
+  color: var(--gold);
 }
 
 /* Section Common */
