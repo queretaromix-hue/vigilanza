@@ -131,6 +131,23 @@ header.scrolled {
   font-size: 1.5rem;
   letter-spacing: 1px;
   color: var(--white);
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 120px; /* Tamaño mucho más grande inicial */
+  width: auto;
+  transition: var(--transition);
+}
+
+header.scrolled .logo img {
+  height: 60px; /* Tamaño reducido al hacer scroll */
+}
+
+/* Ajuste específico para el logo del footer */
+footer .logo img {
+  height: 80px;
 }
 
 .logo span {
